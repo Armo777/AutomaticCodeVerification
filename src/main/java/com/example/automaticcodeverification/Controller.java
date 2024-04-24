@@ -16,16 +16,7 @@ public class Controller {
 
    @GetMapping(path = "/example", consumes = MediaType.APPLICATION_JSON_VALUE)
     public String handleJsonRequest(@RequestBody String jsonRequest) {
-        // Здесь вы можете обрабатывать полученный JSON-запрос
-        System.out.println("Received JSON request: " + jsonRequest);
-
-        // Верните ответ в виде строки или объекта JSON, в зависимости от вашей логики обработки запроса
-        return "Response from server" + jsonRequest;
+        System.out.println("Получен запрос JSON: " + jsonRequest);
+        return "Ответ от сервера" + jsonRequest;
     }
-
-    /*@GetMapping(path = "/cors")
-    public String handleJson(@RequestParam String currentDirectory) {
-            currentDirectory = System.getProperty("user.dir");
-            return "Текущая директория: " + currentDirectory;
-    }*/
 }

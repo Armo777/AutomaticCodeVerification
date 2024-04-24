@@ -19,7 +19,7 @@ public class CodeExecutionController {
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public String handleJsonRequest(@RequestBody String code) {
         try {
-            // Это предположительный код для компиляции и выполнения кода Java
+            // Код для компиляции и выполнения кода Java
             JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
             DiagnosticCollector<JavaFileObject> diagnostics = new DiagnosticCollector<>();
             StandardJavaFileManager fileManager = compiler.getStandardFileManager(diagnostics, null, null);
@@ -35,24 +35,22 @@ public class CodeExecutionController {
 
             if (success) {
                 // Выполнение скомпилированного кода
-                //ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
                 ClassLoader classLoader = fileManager.getClassLoader(StandardLocation.CLASS_OUTPUT);
                 Class<?> dynamicClass = classLoader.loadClass("DynamicCode");
                 Runnable runnable = (Runnable) dynamicClass.newInstance();
                 runnable.run();
-                return "Code executed successfully!";
+                return "Код выполнен успешно!";
             } else {
-                // Обработка ошибок компиляции, если они возникли
                 StringBuilder errors = new StringBuilder();
                 for (Diagnostic<? extends JavaFileObject> diagnostic : diagnostics.getDiagnostics()) {
                     errors.append(diagnostic.getMessage(null)).append("\n");
                 }
-                return "Code compilation failed with errors:\n" + errors.toString();
+                return "Компиляция кода завершилась неудачей с ошибками:\n" + errors.toString();
             }
         } catch (Exception e) {
             LOGGER.severe("Произошло исключение: " + e.getMessage());
             e.printStackTrace();
         }
-        return "Code executed successfully!";
+        return "Код выполнен успешно!";
     }
 }
